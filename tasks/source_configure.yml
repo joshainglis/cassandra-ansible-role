@@ -1,13 +1,5 @@
 # file: cassandra/tasks/source_configure.yml
 
-- name: Cassandra | Make sure the cassandra log directory exists
-  file:
-    path: "/var/log/cassandra"
-    owner: "{{cassandra_user}}"
-    group: "{{cassandra_group}}"
-    state: directory
-    mode: 0755
-
 - name: Cassandra | Update the cassandra configuration
   template:
     src: "{{item}}.j2"

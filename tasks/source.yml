@@ -2,8 +2,6 @@
 
 - include: user.yml
 
-- include_vars: "source.yml"
-
 - name: Cassandra | Make sure the cassandra dependencies are installed
   apt:
     pkg: "{{item}}"
@@ -35,22 +33,5 @@
 
 - name: Cassandra | Set the system default for cassandra-cli
   command: update-alternatives --set cassandra-cli /usr/local/etc/cassandra/default/bin/cassandra-cli
-
-- name: Cassandra | Make sure the working (data) directory for cassandra is present
-  file:
-    path: "{{cassandra_data_dir}}"
-    owner: "{{cassandra_user}}"
-    group: "{{cassandra_group}}"
-    mode: 0750
-    state: directory
-
-- name: Cassandra | Make sure the working subdirectories for cassandra are present
-  file:
-    path: "{{cassandra_data_dir}}/{{item}}"
-    owner: "{{cassandra_user}}"
-    group: "{{cassandra_group}}"
-    mode: 0750
-    state: directory
-  with_items: ["data", "commitlog", "saved_caches"]
 
 - include: source_configure.yml

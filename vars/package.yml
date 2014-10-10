@@ -1,3 +1,0 @@
-# file: cassandra/vars/package.yml
-
-cassandra_data_dir: "/var/lib/cassandra"

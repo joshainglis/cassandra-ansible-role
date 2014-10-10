@@ -31,3 +31,28 @@
 
 - name: Cassandra | Set the right expiration on the cassandra user
   command: "sudo chage -I -1 -E -1 -m -1 -M -1 -W -1 -E -1 {{cassandra_user}}"
+
+- name: Cassandra | Make sure the cassandra log directory exists
+  file:
+    path: "/var/log/cassandra"
+    owner: "{{cassandra_user}}"
+    group: "{{cassandra_group}}"
+    state: directory
+    mode: 0755
+
+- name: Cassandra | Make sure the working (data) directory for cassandra is present
+  file:
+    path: "{{cassandra_data_dir}}"
+    owner: "{{cassandra_user}}"
+    group: "{{cassandra_group}}"
+    mode: 0750
+    state: directory
+
+- name: Cassandra | Make sure the working subdirectories for cassandra are present
+  file:
+    path: "{{cassandra_data_dir}}/{{item}}"
+    owner: "{{cassandra_user}}"
+    group: "{{cassandra_group}}"
+    mode: 0750
+    state: directory
+  with_items: ["data", "commitlog", "saved_caches"]

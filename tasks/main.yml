@@ -4,3 +4,6 @@
   when: cassandra_install_method == "source"
 - include: package.yml
   when: cassandra_install_method == "package"
+- include: logstash.yml
+  tags:
+    - logstash_integration
