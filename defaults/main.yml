@@ -93,3 +93,11 @@ cassandra_index_interval: "128"
 cassandra_internode_compression: "all"
 cassandra_inter_dc_tcp_nodelay: "true"
 cassandra_preheat_kernel_page_cache: "false"
+
+opscenter_package: 'opscenter-free'
+opscenter_state: started
+opscenter_enable: yes
+
+opscenter_uid:  205
+opscenter_user: opscenter
+opscenter_user_dir: /var/run/opscenter

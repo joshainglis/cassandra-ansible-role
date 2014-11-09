@@ -1,0 +1,39 @@
+- name: Make sure the opscenter user directory exists
+  file:
+    path: "{{opscenter_user_dir}}"
+    state: directory
+
+- name: Make sure the opscenter user is present
+  user:
+    name: "{{opscenter_user}}"
+    uid: "{{opscenter_uid}}"
+    group: "{{cassandra_group}}"
+    comment: "Opscenter user"
+    home: "{{opscenter_user_dir}}"
+    shell: /bin/bash
+    state: present
+
+- name: Create the opscenter user .ssh directory
+  file: path="{{ opscenter_user_dir }}/.ssh" state=directory owner={{ opscenter_user }} group={{ cassandra_group }} mode=0700
+
+- name: Create the opscenter user SSH private key
+  copy: src="opscenter_user_ssh_key" dest="{{ opscenter_user_dir }}/.ssh/id_rsa" owner={{ opscenter_user }} group={{ cassandra_group }} mode=0600
+
+- name: Create the opscenter user SSH public key
+  copy: src="opscenter_user_ssh_key.pub" dest="{{ opscenter_user_dir }}/.ssh/id_rsa.pub" owner={{ opscenter_user }} group={{ cassandra_group }} mode=0644
+
+- name: Create the opscenter user SSH .authorized_keys file
+  copy: src="opscenter_user_ssh_key.pub" dest="{{ opscenter_user_dir }}/.ssh/authorized_keys" owner={{ opscenter_user }} group={{ cassandra_group }} mode=0644
+
+- name: Install opscenter dependencies
+  apt:
+    pkg: 'libssl0.9.8'
+    state: present
+
+- name: Install opscenter
+    pkg: {{ opscenter_package }}
+    state: present
+
+- name: Start opscenterd
+  service: name=opscenterd state={{opscenter_state}} enabled={{ opscenter_enable }}
+
