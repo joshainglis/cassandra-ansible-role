@@ -2,11 +2,17 @@
 
 - include: source.yml
   when: cassandra_install_method == "source"
+  tags:
+    - cassandra
 - include: package.yml
   when: cassandra_install_method == "package"
+  tags:
+    - cassandra
 - include: opscenter.yml
   tags:
+    - cassandra
     - opscenter
 - include: logstash.yml
   tags:
-    - logstash_integration
+    - cassandra
+    - logstash
