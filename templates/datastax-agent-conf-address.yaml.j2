@@ -1,0 +1,5 @@
+stomp_interface: {{ opscenter_listen_address }}
+local_interface: {{ cassandra_listen_address }}
+agent_rpc_interface: {{ cassandra_listen_address }}
+agent_rpc_broadcast_address: {{ cassandra_listen_address }}
+hosts: ["{{cassandra_listen_address}}"]

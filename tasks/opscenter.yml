@@ -31,9 +31,41 @@
     state: present
 
 - name: Install opscenter
-    pkg: {{ opscenter_package }}
+  apt:
+    pkg: "{{ opscenter_package }}"
     state: present
+
+- name: Update the opscenter configuration
+  template:
+    src: "{{item}}.j2"
+    dest: "/etc/opscenter/{{item}}"
+    owner: "{{opscenter_user}}"
+    group: "{{cassandra_group}}"
+    mode: 0644
+  with_items:
+    - "opscenterd.conf"
+  notify:
+    - restart opscenterd
 
 - name: Start opscenterd
   service: name=opscenterd state={{opscenter_state}} enabled={{ opscenter_enable }}
 
+- file: state="directory" path="{{ opscenter_log_dir}}" owner="{{ opscenter_user }}" group="{{ cassandra_group }}" recurse="yes"
+  notify:
+    - restart opscenterd
+- file: state="directory" path="{{ opscenter_etc_dir}}" owner="{{ opscenter_user }}" group="{{ cassandra_group }}" recurse="yes"
+  notify:
+    - restart opscenterd
+
+- name: Install datastax-agent
+  apt:
+    pkg: datastax-agent
+    state: present
+- name: start datastax-agent
+  service: name="datastax-agent" enabled=true
+- name: Update datastax config
+  template:
+    src: "datastax-agent-conf-address.yaml.j2"
+    dest: "/var/lib/datastax-agent/conf/address.yaml"
+  notify:
+    - restart datastax-agent

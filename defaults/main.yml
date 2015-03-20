@@ -23,7 +23,7 @@ cassandra_cluster_name: "Test Cluster"
 cassandra_num_tokens: "256"
 cassandra_initial_token: null
 cassandra_listen_address: "localhost"
-cassandra_seeds: ["localhost"]
+cassandra_seeds: "localhost" # comma separated string
 cassandra_endpoint_snitch: "SimpleSnitch"                               # in case of cluster: RackInferringSnitch
 
 cassandra_rpc_address: "localhost"
@@ -101,3 +101,7 @@ opscenter_enable: yes
 opscenter_uid:  205
 opscenter_user: opscenter
 opscenter_user_dir: /var/run/opscenter
+opscenter_port: 8888
+opscenter_listen_address: 127.0.0.1
+opscenter_log_dir: /var/log/opscenter
+opscenter_etc_dir: /etc/opscenter

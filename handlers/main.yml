@@ -4,3 +4,11 @@
   service:
     name: cassandra
     state: restarted
+- name: restart opscenterd
+  service:
+    name: opscenterd
+    state: restarted
+- name: restart datastax-agent
+  service:
+    name: datastax-agent
+    state: restarted

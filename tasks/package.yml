@@ -17,10 +17,17 @@
     repo: "deb http://debian.datastax.com/community stable main"
     state: present
 
-- name: Cassandra | Install the cassandra package
+- name: Cassandra | Install the dsc package
   apt:
-    name: "cassandra"
+    name: "dsc21"
     state: present
     update_cache: yes
+
+- name: Cassandra | Install the cassandra tools package
+  apt:
+    name: "cassandra-tools"
+    state: present
+    update_cache: yes
+
 
 - include: package_configure.yml

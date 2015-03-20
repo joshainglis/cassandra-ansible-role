@@ -8,11 +8,11 @@
   when: cassandra_install_method == "package"
   tags:
     - cassandra
-- include: opscenter.yml
-  tags:
-    - cassandra
-    - opscenter
-- include: logstash.yml
-  tags:
-    - cassandra
-    - logstash
+#- include: opscenter.yml
+#  tags:
+#    - cassandra
+#    - opscenter
+#- include: logstash.yml
+#  tags:
+#    - cassandra
+#    - logstash
